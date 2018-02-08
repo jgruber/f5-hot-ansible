@@ -1,0 +1,6 @@
+---
+# defaults file for active_standby_stack_deploy
+state: present
+stack_name: active_standby_stack_from_ansible
+template_path: /data/project/f5-hot-ansible/roles/common/templates/f5-openstack-hot/experimental/reference/templates/cluster/nnic/f5_bigip_cluster_n_nic_licensed.yaml
+env_file_path: /data/project/f5-hot-ansible/roles/common/templates/f5-openstack-hot/experimental/reference/templates/cluster/nnic/f5_bigip_cluster_n_nic_env_sl_licensed.yaml

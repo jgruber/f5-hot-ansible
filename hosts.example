@@ -1,0 +1,2 @@
+# sample hosts file, should exist as /etc/ansible/hosts
+localhost ansible_connection=local ansible_python_interpreter="/usr/bin/python"

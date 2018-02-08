@@ -1,0 +1,16 @@
+export OS_TENANT_ID=d303c30a319d422097e5ab0be7b619cd
+export OS_TENANT_NAME="admin"
+# export OS_PROJECT_DOMAIN_NAME=default
+# export OS_PROJECT_DOMAIN_ID=default
+# export OS_USER_DOMAIN_NAME=default
+# export OS_USER_DOMAIN_ID=default
+export OS_USER_DOMAIN=default
+export OS_PROJECT_NAME=admin
+# export OS_PROJECT_DOMAIN=default
+export OS_USERNAME=admin
+export OS_PASSWORD=openstack
+export OS_AUTH_URL=http://controller.mydemo.rocks:5000/v2.0
+export OS_IDENTITY_API_VERSION=3
+export OS_IMAGE_API_VERSION=2
+export OS_REGION_NAME=DAL09
+

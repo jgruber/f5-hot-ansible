@@ -1,0 +1,19 @@
+---
+- hosts: localhost
+  name: Create or Destroy an f5 TMOS device stack from heat templates
+  vars:
+    deployment: standalone
+    state: present
+  tasks:
+    - debug:
+        msg: "Deployment type: {{ deployment }}"
+    - name: deploy standalone TMOS device
+      include_role:
+        name: standalone-stack
+      when:
+        - deployment == "standalone"
+    - name: deploy active-standby TMOS device pair
+      include_role:
+        name: active-standby-stack
+      when:
+        - deployment == "cluster"
