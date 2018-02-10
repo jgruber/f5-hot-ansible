@@ -2,5 +2,29 @@
 # defaults file for active_standby_stack_deploy
 state: present
 stack_name: active_standby_stack_from_ansible
-template_path: /data/project/f5-hot-ansible/roles/common/templates/f5-openstack-hot/experimental/reference/templates/cluster/nnic/f5_bigip_cluster_n_nic_licensed.yaml
-env_file_path: /data/project/f5-hot-ansible/roles/common/templates/f5-openstack-hot/experimental/reference/templates/cluster/nnic/f5_bigip_cluster_n_nic_env_sl_licensed.yaml
+bigip_image: BIGIP-13.1.0.2.0.0.6.LTM_1SLOT
+bigip_flavor: m1.bigip.LTM.small
+bigip_os_ssh_key: admin
+bigip_admin_pwd: openstack
+bigip_root_pwd: openstack
+bigip_cluster_name: sync-failover
+bigip_cluster_sync_type: sync-failover
+bigip_cluster_auto_sync: true
+bigip_cluster_save_on_auto_sync: true
+external_network: public
+mgmt_network: management
+mgmt_mtu: 1400
+mgmt_security_group_name: mgmt-secgroup-nnic
+f5_bigiq_host: 172.13.1.107
+f5_bigiq_username: admin
+f5_bigiq_password: openstack
+f5_bigiq_license_pool_name: bigip-best-10G
+bigip_cluster_network_name: HA
+bigip_internal_network: provider_network_1
+bigip_external_network: provider_network_2
+bigip_cluster_subnet_id: e858b4a5-be62-47cb-92bb-e99fc84ab22f
+bigip_internal_subnet_id: 49bc3090-3911-4954-b51d-5fe56fefc040
+bigip_external_subnet_id: 5d83c8c2-d1eb-4f6e-afed-e4ef1eaa2ef9
+template_path: roles/common/templates/f5-openstack-hot/experimental/reference/templates/cluster/nnic/f5_bigip_cluster_n_nic_licensed.yaml
+env_file_path: roles/common/files/registry.env
+

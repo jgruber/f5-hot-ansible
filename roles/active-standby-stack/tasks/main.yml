@@ -19,7 +19,93 @@
       name: "{{ stack_name }}"
       state: "{{ state }}"
       template: "{{ template_path }}"
-      parameters: {}
+      parameters: 
+        bigip_image: "{{ bigip_image }}"
+        bigip_flavor: "{{ bigip_flavor }}"
+        use_config_drive: true
+        bigip_os_ssh_key: "{{ bigip_os_ssh_key }}"
+        bigip_admin_pwd: "{{ bigip_admin_pwd }}"
+        bigip_root_pwd: "{{ bigip_root_pwd }}"
+        bigip_modules:
+         - ltm:nominal
+        bigip_cluster_name: sync-failover
+        bigip_cluster_sync_type: sync-failover
+        bigip_cluster_auto_sync: false
+        bigip_cluster_save_on_auto_sync: false
+        f5_bigiq_host: "{{ f5_bigiq_host }}"
+        f5_bigiq_username: "{{ f5_bigiq_username }}"
+        f5_bigiq_password: "{{ f5_bigiq_password }}"
+        f5_bigiq_license_pool_name: "{{ f5_bigiq_license_pool_name }}"
+        external_network: "{{ external_network }}"
+        mgmt_network: "{{ mgmt_network }}"
+        mgmt_mtu: "{{ mgmt_mtu }}"
+        mgmt_security_group_name: "{{ mgmt_security_group_name }}"
+        bigip_nic_count: 3
+        network_vlan_names:
+          - "{{ bigip_cluster_network_name }}"
+          - "{{ bigip_internal_network }}"
+          - "{{ bigip_external_network }}"
+        network_vlan_subnets:
+          - "{{ bigip_cluster_subnet_id }}"
+          - "{{ bigip_internal_subnet_id }}"
+          - "{{ bigip_external_subnet_id }}"
+        network_vlan_security_group_rules:
+          - security_group_rules:
+            - rules:
+              - protocol: icmp
+                direction: ingress
+              - protocol: icmp
+                direction: egress
+              - protocol: tcp
+                direction: ingress
+              - protocol: tcp
+                direction: egress
+              - protocol: udp
+                direction: ingress
+              - protocol: udp
+                direction: egress
+            - rules:
+              - protocol: icmp
+                direction: ingress
+              - protocol: icmp
+                direction: egress
+              - protocol: tcp
+                direction: ingress
+              - protocol: tcp
+                direction: egress
+              - protocol: udp
+                direction: ingress
+              - protocol: udp
+                direction: egress
+            - rules:
+              - protocol: icmp
+                direction: ingress
+              - protocol: icmp
+                direction: egress
+              - protocol: tcp
+                direction: ingress
+              - protocol: tcp
+                direction: egress
+              - protocol: udp
+                direction: ingress
+              - protocol: udp
+                direction: egress
+        bigip_vlan_mtus:
+          - 1400
+          - 1400
+          - 1400
+        bigip_vlan_tags:
+          - None
+          - None
+          - None
+        bigip_vlan_names:
+          - HA
+          - VTEP
+          - external
+        bigip_self_port_lockdowns:
+          - allow-default
+          - tcp:22;tcp:443;tcp:53;udp:53;udp:4789
+          - tcp:22;tcp:54;udp:53;tcp:80;tcp:443
       environment:
         - "{{ env_file_path }}"
       timeout: 1800
@@ -63,11 +149,6 @@
     - state != "absent"
 
 - set_fact:
-    data_1_4_slave: "{{ data_int_slave[3] }}"
-  when:
-    - state != "absent"
-
-- set_fact:
     bigip_icontrol_endpoint_master: "{{ result[0].output_value }}"
   vars:
     query: "[?output_key=='floating_ip_master']"
@@ -95,11 +176,6 @@
 
 - set_fact:
     data_1_3_master: "{{ data_int_master[2] }}"
-  when:
-    - state != "absent"
-
-- set_fact:
-    data_1_4_master: "{{ data_int_master[3] }}"
   when:
     - state != "absent"
 
@@ -146,18 +222,6 @@
 - name: Standby Interface 1.3 IP Address Allocations
   debug: var=item.ip_address
   with_items: "{{ data_1_3_master }}"
-  when:
-    - state != "absent"
-
-- name: Active Interface 1.4 IP Address Allocations
-  debug: var=item.ip_address
-  with_items: "{{ data_1_4_slave }}"
-  when:
-    - state != "absent"
-
-- name: Standby Interface 1.4 IP Address Allocations
-  debug: var=item.ip_address
-  with_items: "{{ data_1_4_master }}"
   when:
     - state != "absent"
 
